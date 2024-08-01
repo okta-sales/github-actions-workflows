@@ -95,7 +95,7 @@ jobs:
         run: |
           argocd app create ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
             --dest-namespace ${{ inputs.namespace }} \
-            --dest-server ${{ inputs.argocd-destination-cluster }} \
+            --dest-name ${{ inputs.argocd-destination-cluster }} \
             --helm-set image.tag=${{ inputs.image-tag }} \
             --helm-set run_migrations=${{ inputs.run-migrations }} \
             --path ${{ inputs.chart-path }} \
