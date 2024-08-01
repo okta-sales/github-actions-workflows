@@ -40,7 +40,7 @@ on:
         required: false
         type: string
         description: Github runner container
-        default: "deviclinic/ci-argocd:2.9.0"
+        default: "argocd/ci-argocd:2.9.0"
 
       image-tag:
         required: true

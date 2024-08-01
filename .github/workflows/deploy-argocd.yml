@@ -93,7 +93,7 @@ jobs:
       - name: Create/Update application on ArgoCD
         shell: bash
         run: |
-          argocd app create ${{ inputs.environment }}-${{ inputs.application-name }} \
+          argocd app create ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
             --dest-namespace ${{ inputs.namespace }} \
             --dest-server ${{ inputs.argocd-destination-cluster }} \
             --helm-set image.tag=${{ inputs.image-tag }} \
@@ -110,7 +110,7 @@ jobs:
         if: inputs.argocd-skip-sync == false
         shell: bash
         run: |
-          argocd app sync ${{ inputs.environment }}-${{ inputs.application-name }} \
+          argocd app sync ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
             --server ${{ inputs.argocd-server-url }} \
             --force \
             --prune \
