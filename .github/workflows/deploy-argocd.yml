@@ -66,7 +66,7 @@ on:
         description: Github ref
         default: HEAD
 
-      repository-name:
+      repository-url:
         required: true
         type: string
         description: Github repository name
@@ -100,7 +100,7 @@ jobs:
             --helm-set run_migrations=${{ inputs.run-migrations }} \
             --path ${{ inputs.chart-path }} \
             --project ${{ inputs.argocd-project }} \
-            --repo git@github.com:${{ inputs.repository-name }} \
+            --repo ${{ inputs.repository-url }} \
             --server ${{ inputs.argocd-server-url }} \
             --upsert \
             --revision ${{ inputs.revision }} \
