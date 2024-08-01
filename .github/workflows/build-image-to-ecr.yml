@@ -43,15 +43,7 @@ on:
         description: ECR repository name
 
     secrets:
-      PIP_EXTRA_INDEX_URL:
-        required: false
       GH_ACCESS_TOKEN:
-        required: false
-      REQUIREMENTS:
-        required: false
-      NEXT_PUBLIC_PORTAL_API_BASE_URL:
-        required: false
-      NEXT_PUBLIC_BFF_API_BASE_URL:
         required: false
 
 jobs:
@@ -95,7 +87,3 @@ jobs:
             ${{ inputs.ecr-url }}/${{ inputs.ecr-repo }}:${{ inputs.docker-tag }}
           build-args: |
             GH_ACCESS_TOKEN=${{ secrets.GH_ACCESS_TOKEN }}
-            PIP_EXTRA_INDEX_URL=${{ secrets.PIP_EXTRA_INDEX_URL }}
-            REQUIREMENTS=${{ secrets.REQUIREMENTS }}
-            NEXT_PUBLIC_PORTAL_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_PORTAL_API_BASE_URL }}
-            NEXT_PUBLIC_BFF_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_BFF_API_BASE_URL }}
