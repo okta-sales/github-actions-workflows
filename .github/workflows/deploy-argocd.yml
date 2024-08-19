@@ -34,6 +34,24 @@ on:
         type: string
         description: ArgoCD sync timeout
         default: "300"
+      
+      sync-policy:
+        required: false
+        type: string
+        description: ArgoCD Sync Policy (manual,auto)
+        default: manual
+      
+      auto-prune:
+        required: false
+        type: boolean
+        description: Enables Prune Resources
+        default: false
+
+      self-heal:
+        required: false
+        type: boolean
+        description: Enables Self Heal
+        default: false
 
       chart-path:
         required: true
@@ -93,7 +111,7 @@ jobs:
       - name: Create/Update application on ArgoCD
         shell: bash
         run: |
-          argocd app create ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
+          command="argocd app create ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
             --dest-namespace ${{ inputs.namespace }} \
             --dest-name ${{ inputs.argocd-destination-cluster }} \
             --helm-set image.tag=${{ inputs.image-tag }} \
@@ -104,7 +122,19 @@ jobs:
             --server ${{ inputs.argocd-server-url }} \
             --upsert \
             --revision ${{ inputs.revision }} \
-            --values values-${{ inputs.environment }}.yaml
+            --values values-${{ inputs.environment }}.yaml"
+            --sync-policy ${{ inputs.sync-policy }}
+
+          if [ "${{ inputs.auto-prune }}" == "true" ]; then
+            command+=" --auto-prune"
+          fi
+          
+          if [ "${{ inputs.self-heal }}" == "true" ]; then
+            command+=" --self-heal"
+          fi
+          
+          echo "Executing command: $command"
+          eval $command
 
       - name: Run Sync on ArgoCD
         if: inputs.argocd-skip-sync == false
