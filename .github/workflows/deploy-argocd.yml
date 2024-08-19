@@ -122,14 +122,14 @@ jobs:
             --server ${{ inputs.argocd-server-url }} \
             --upsert \
             --revision ${{ inputs.revision }} \
-            --values values-${{ inputs.environment }}.yaml \ "
+            --values values-${{ inputs.environment }}.yaml "
 
           if [ "${{ inputs.auto-prune }}" == "true" ]; then
-            command+=" --auto-prune \"
+            command+=" --auto-prune"
           fi
           
           if [ "${{ inputs.self-heal }}" == "true" ]; then
-            command+=" --self-heal \"
+            command+=" --self-heal"
           fi
           
           command+=" --sync-policy ${{ inputs.sync-policy }}"
