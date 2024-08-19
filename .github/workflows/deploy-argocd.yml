@@ -46,6 +46,12 @@ on:
         type: boolean
         description: Enables Prune Resources
         default: false
+      
+      async:
+        required: false
+        type: boolean
+        description: Sync with async option
+        default: false
 
       self-heal:
         required: false
@@ -135,16 +141,23 @@ jobs:
           
           command+=" --sync-policy ${{ inputs.sync-policy }}"
 
-          echo "Executing command: $command"
+          echo "Upsert app: $command"
           eval $command
 
       - name: Run Sync on ArgoCD
         if: inputs.argocd-skip-sync == false
         shell: bash
         run: |
-          argocd app sync ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
+          command="argocd app sync ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
             --server ${{ inputs.argocd-server-url }} \
             --force \
             --prune \
             --retry-limit 3 \
-            --timeout ${{ inputs.argocd-sync-timeout }}
+            --timeout ${{ inputs.argocd-sync-timeout }} "
+
+          if [ "${{ inputs.async }}" == "true" ]; then
+            command+=" --async"
+          fi
+
+          echo "Sync app: $command"
+          eval $command
