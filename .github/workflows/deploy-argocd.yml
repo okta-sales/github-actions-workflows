@@ -153,6 +153,7 @@ jobs:
             --force \
             --prune \
             --retry-limit 3 \
+            --grpc-web \
             --timeout ${{ inputs.argocd-sync-timeout }} "
 
           if [ "${{ inputs.async }}" == "true" ]; then
