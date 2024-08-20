@@ -100,6 +100,12 @@ on:
         type: string
         description: Whether run migrations before or after deploy
         default: "pre-install,pre-upgrade"
+      
+      runs-on:
+        required: false
+        type: string
+        description: Runner type
+        default: 'self-hosted'
 
     secrets:
       ARGOCD_AUTH_TOKEN:
@@ -107,7 +113,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ inputs.runs-on }}
     container:
       image: ${{ inputs.git-runner-container }}
     env:

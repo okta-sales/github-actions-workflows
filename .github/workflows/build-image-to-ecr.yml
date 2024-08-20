@@ -41,6 +41,11 @@ on:
         required: true
         type: string
         description: ECR repository name
+      runs-on:
+        required: false
+        type: string
+        description: Runner type
+        default: 'self-hosted'
 
     secrets:
       GH_ACCESS_TOKEN:
@@ -49,7 +54,7 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ inputs.runs-on }}
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
       id-token: write
