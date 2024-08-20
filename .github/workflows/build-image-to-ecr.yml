@@ -45,7 +45,7 @@ on:
         required: false
         type: string
         description: Runner type
-        default: 'self-hosted'
+        default: ubuntu-22.04
 
     secrets:
       GH_ACCESS_TOKEN:
