@@ -140,7 +140,6 @@ jobs:
             --server ${{ inputs.argocd-server-url }} \
             --upsert \
             --revision ${{ inputs.revision }} \
-            --insecure \
             --values values-${{ inputs.environment }}.yaml "
 
           if [ "${{ inputs.auto-prune }}" == "true" ]; then
