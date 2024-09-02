@@ -139,10 +139,7 @@ jobs:
             --repo ${{ inputs.repository-url }} \
             --server ${{ inputs.argocd-server-url }} \
             --upsert \
-            --http-retry-max ${{ inputs.retry-limit }} \
             --revision ${{ inputs.revision }} \
-            --grpc-web \
-            --insecure \
             --values values-${{ inputs.environment }}.yaml "
 
           if [ "${{ inputs.auto-prune }}" == "true" ]; then
@@ -167,7 +164,6 @@ jobs:
             --force \
             --prune \
             --retry-limit ${{ inputs.retry-limit }} \
-            --grpc-web \
             --timeout ${{ inputs.argocd-sync-timeout }} "
 
           if [ "${{ inputs.async }}" == "true" ]; then
