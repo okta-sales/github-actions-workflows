@@ -139,6 +139,7 @@ jobs:
             --repo ${{ inputs.repository-url }} \
             --server ${{ inputs.argocd-server-url }} \
             --upsert \
+            --grpc-web \
             --revision ${{ inputs.revision }} \
             --values values-${{ inputs.environment }}.yaml "
 
@@ -163,6 +164,7 @@ jobs:
             --server ${{ inputs.argocd-server-url }} \
             --force \
             --prune \
+            --grpc-web \
             --retry-limit ${{ inputs.retry-limit }} \
             --timeout ${{ inputs.argocd-sync-timeout }} "
 
