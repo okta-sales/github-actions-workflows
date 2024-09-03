@@ -112,6 +112,12 @@ on:
         type: string
         description: Runner type
         default: ubuntu-22.04
+      
+      grpc-keep-alive-min:
+        required: false
+        type: string
+        description: GRPC Keep Alive Min
+        default: 20s
 
     secrets:
       ARGOCD_AUTH_TOKEN:
@@ -125,6 +131,7 @@ jobs:
     env:
       # Token to communicate via argocd cli
       ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_AUTH_TOKEN }}
+      ARGOCD_GRPC_KEEP_ALIVE_MIN: ${{ inputs.grpc-keep-alive-min }}
     steps:
       - name: Create/Update application on ArgoCD
         shell: bash
