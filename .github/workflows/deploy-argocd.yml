@@ -46,6 +46,12 @@ on:
         type: string
         description: ArgoCD Sync Policy (manual,auto)
         default: manual
+
+      auto-create-namespace:
+        required: false
+        type: boolean
+        description: Enables Auto create namespace
+        default: false
       
       auto-prune:
         required: false
@@ -89,6 +95,11 @@ on:
         required: true
         type: string
         description: K8s namespace
+        
+      app-namespace:
+        required: true
+        type: string
+        description: Argocd app namespace
 
       revision:
         required: false
@@ -136,7 +147,8 @@ jobs:
       - name: Create/Update application on ArgoCD
         shell: bash
         run: |
-          command="argocd app create ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
+          command="argocd app create ${{ inputs.application-name }} \
+            --app-namespace ${{ inputs.app-namespace }}
             --dest-namespace ${{ inputs.namespace }} \
             --dest-name ${{ inputs.argocd-destination-cluster }} \
             --helm-set image.tag=${{ inputs.image-tag }} \
@@ -149,6 +161,10 @@ jobs:
             --grpc-web \
             --revision ${{ inputs.revision }} \
             --values values-${{ inputs.environment }}.yaml "
+
+          if [ "${{ inputs.auto-create-namespace }}" == "true" ]; then
+            command+=" --sync-option CreateNamespace=true "
+          fi          
 
           if [ "${{ inputs.auto-prune }}" == "true" ]; then
             command+=" --auto-prune"
