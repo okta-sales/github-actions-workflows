@@ -16,6 +16,11 @@ on:
         type: string
         description: Runner type
         default: ubuntu-22.04
+      ref:
+        required: false
+        type: string
+        description: Ref
+        default: ${{ github.ref_name }}
     outputs:
       release-tag:
         description: Release Tag
@@ -32,12 +37,13 @@ jobs:
       release-tag: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ inputs.ref }}
 
       - name: Generate next release
-        uses: zwaldowski/semver-release-action@v3
+        uses: zwaldowski/semver-release-action@v4
         id: version
         with:
           bump: ${{ inputs.bump-type }}
