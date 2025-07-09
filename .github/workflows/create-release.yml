@@ -61,6 +61,7 @@ jobs:
           prefix: ${{ inputs.prefix }}
           github_token: ${{ secrets.GH_TOKEN }}
           dry_run: true
+          sha: ${{ steps.checkout.outputs.commit }}
 
       - name: Create Release
         uses: ncipollo/release-action@v1
@@ -69,3 +70,4 @@ jobs:
           name: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
           tag: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
           token: ${{ secrets.GH_TOKEN }}
+          commit: ${{ steps.checkout.outputs.commit }}
