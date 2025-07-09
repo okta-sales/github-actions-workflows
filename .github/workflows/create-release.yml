@@ -16,11 +16,6 @@ on:
         type: string
         description: Runner type
         default: ubuntu-22.04
-      generate-release-notes:
-        required: false
-        type: boolean
-        description: Generate realease notes
-        default: true
     outputs:
       release-tag:
         description: Release Tag
@@ -53,18 +48,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          generateReleaseNotes: false
+          generateReleaseNotes: true
           name: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
           tag: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
           token: ${{ secrets.GH_TOKEN }}
-          files: |
-            **/*
-            !.git/**
-            !node_modules/**
-            !.github/**
-            !.vscode/**
-            !.idea/**
-            !*.log
-            !*.tmp
-            !*.swp
-            !*.bak
