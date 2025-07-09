@@ -21,6 +21,11 @@ on:
         type: string
         description: Ref
         default: ${{ github.ref_name }}
+      fetch-depth:
+        required: false
+        type: number
+        description: Fetch depth
+        default: 1
     outputs:
       release-tag:
         description: Release Tag
@@ -39,7 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: ${{ inputs.fetch-depth }}
           ref: ${{ inputs.ref }}
 
       - name: Generate next release
