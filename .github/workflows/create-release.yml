@@ -58,6 +58,13 @@ jobs:
           tag: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
           token: ${{ secrets.GH_TOKEN }}
           files: |
-            chart/**/*
-            values-production.yaml
-            values-staging.yaml
+            **/*
+            !.git/**
+            !node_modules/**
+            !.github/**
+            !.vscode/**
+            !.idea/**
+            !*.log
+            !*.tmp
+            !*.swp
+            !*.bak
