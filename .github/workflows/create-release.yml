@@ -57,3 +57,7 @@ jobs:
           name: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
           tag: ${{ inputs.prefix }}${{ steps.version.outputs.version }}
           token: ${{ secrets.GH_TOKEN }}
+          files: |
+            chart/**/*
+            values-production.yaml
+            values-staging.yaml
