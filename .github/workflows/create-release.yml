@@ -47,6 +47,12 @@ jobs:
           fetch-depth: ${{ inputs.fetch-depth }}
           ref: ${{ inputs.ref }}
 
+      - name: Pull latest ref
+        run: git pull origin ${{ inputs.ref }}
+
+      - name: Fetch all tags
+        run: git fetch --tags --force
+
       - name: Generate next release
         uses: zwaldowski/semver-release-action@v4
         id: version
