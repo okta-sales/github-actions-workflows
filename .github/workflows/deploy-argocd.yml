@@ -189,7 +189,7 @@ jobs:
         if: inputs.argocd-skip-sync == false
         shell: bash
         run: |
-          command="argocd app wait ${{ inputs.application-name }} \
+          command="argocd app wait ${{ inputs.app-namespace }}/${{ inputs.application-name }} \
             --server ${{ inputs.argocd-server-url }} \
             --health \
             --sync \
