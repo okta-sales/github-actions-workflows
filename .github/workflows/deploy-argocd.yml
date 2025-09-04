@@ -179,21 +179,18 @@ jobs:
           echo "Upsert app: $command"
           eval $command
 
-      - name: Run Sync on ArgoCD
+      - name: Wait for ArgoCD application to be healthy and synced
         if: inputs.argocd-skip-sync == false
         shell: bash
         run: |
-          command="argocd app sync ${{ inputs.argocd-project }}/${{ inputs.application-name }} \
+          command="argocd app wait ${{ inputs.application-name }} \
             --server ${{ inputs.argocd-server-url }} \
-            --force \
-            --prune \
-            --grpc-web \
-            --retry-limit ${{ inputs.retry-limit }} \
-            --timeout ${{ inputs.argocd-sync-timeout }} "
+            --app-namespace ${{ inputs.app-namespace }} \
+            --health \
+            --sync \
+            --output tree \
+            --timeout 600 \
+            --grpc-web "
 
-          if [ "${{ inputs.async }}" == "true" ]; then
-            command+=" --async"
-          fi
-
-          echo "Sync app: $command"
+          echo "Wait app: $command"
           eval $command
