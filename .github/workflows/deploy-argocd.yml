@@ -185,7 +185,6 @@ jobs:
         run: |
           command="argocd app wait ${{ inputs.application-name }} \
             --server ${{ inputs.argocd-server-url }} \
-            --app-namespace ${{ inputs.app-namespace }} \
             --health \
             --sync \
             --output tree \
