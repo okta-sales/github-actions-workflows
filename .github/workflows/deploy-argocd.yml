@@ -130,6 +130,12 @@ on:
         description: GRPC Keep Alive Min
         default: 20s
 
+      argocd-sync-additional-args:
+        required: false
+        type: string
+        description: Additional arguments for ArgoCD sync
+        default: ""
+
     secrets:
       ARGOCD_AUTH_TOKEN:
         required: true
@@ -187,9 +193,8 @@ jobs:
             --server ${{ inputs.argocd-server-url }} \
             --health \
             --sync \
-            --output tree \
-            --timeout 600 \
-            --grpc-web "
+            --grpc-web \
+            ${{ inputs.argocd-sync-additional-args }}"
 
           echo "Wait app: $command"
           eval $command
