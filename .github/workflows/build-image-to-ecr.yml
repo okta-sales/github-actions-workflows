@@ -79,6 +79,11 @@ jobs:
       contents: read
       pull-requests: none
     steps:
+      - name: Debug Build Args
+        run: |
+          echo "Build args received:"
+          echo "${{ inputs.docker-build-args }}"
+
       - name: Checkout
         uses: actions/checkout@v3
 
