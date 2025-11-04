@@ -15,7 +15,7 @@ on:
         required: false
         type: string
         description: docker build args
-        default: ''
+        default: ""
       docker-build-target:
         required: false
         type: string
@@ -24,12 +24,12 @@ on:
         required: false
         type: string
         description: Dockerfile dir
-        default: '.'
+        default: "."
       docker-file-path:
         required: false
         type: string
         description: Dockerfile path
-        default: 'Dockerfile'
+        default: "Dockerfile"
       docker-tag:
         required: true
         type: string
@@ -51,25 +51,33 @@ on:
         required: false
         type: string
         description: Cache from config
-        default: 'type=gha'
+        default: "type=gha"
       cache-to:
         required: false
         type: string
         description: Cache to config
-        default: 'type=gha,mode=max'
+        default: "type=gha,mode=max"
       environment:
         required: false
         type: string
         description: Environment
-        default: ''
+        default: ""
+      ref:
+        required: false
+        type: string
+        description: Ref
+        default: ${{ github.ref_name }}
+      fetch-depth:
+        required: false
+        type: number
+        description: Fetch depth
+        default: 1
 
     secrets:
       GH_ACCESS_TOKEN:
         required: false
-      
 
 jobs:
-
   build:
     runs-on: ${{ inputs.runs-on }}
     environment: ${{ inputs.environment }}
@@ -86,6 +94,9 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: ${{ inputs.fetch-depth }}
+          ref: ${{ inputs.ref }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
