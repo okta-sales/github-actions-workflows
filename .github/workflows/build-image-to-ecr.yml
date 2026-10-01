@@ -80,6 +80,8 @@ on:
 jobs:
   build:
     runs-on: ${{ inputs.runs-on }}
+    # Falha cedo se o runner morrer ou o build travar, em vez de esperar o limite de 6h.
+    timeout-minutes: 20
     environment: ${{ inputs.environment }}
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
