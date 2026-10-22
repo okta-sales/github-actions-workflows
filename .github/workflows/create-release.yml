@@ -43,7 +43,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: ${{ inputs.fetch-depth }}
           ref: ${{ inputs.ref }}
@@ -55,7 +55,7 @@ jobs:
         run: git fetch --tags --force
 
       - name: Generate next release
-        uses: zwaldowski/semver-release-action@v4
+        uses: zwaldowski/semver-release-action@v6
         id: version
         with:
           bump: ${{ inputs.bump-type }}
