@@ -93,27 +93,27 @@ jobs:
           echo "${{ inputs.docker-build-args }}"
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           fetch-depth: ${{ inputs.fetch-depth }}
           ref: ${{ inputs.ref }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2.1.0
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ inputs.aws-creds-role-to-assume }}
           aws-region: ${{ inputs.aws-region }}
 
       - name: Login to ECR ${{ inputs.ecr-url }}
-        uses: docker/login-action@v2
+        uses: docker/login-action@v4
         with:
           registry: ${{ inputs.ecr-url }}
 
       - name: Build image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         env:
           DD_GIT_REPOSITORY_URL: ${{ github.event.repository.html_url }}
           DD_GIT_COMMIT_SHA: ${{ github.sha }}
